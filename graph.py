@@ -22,16 +22,19 @@ class grafic():
             line = line.split('\t')
             dots.append((float(line[0]),float(line[1])))
         maxValue = dots[0][1]
+        minValue = dots[0][1]
         for dot in dots:
             if dot[1]>maxValue:
                 maxValue = dot[1]
+            if dot[1]<minValue:
+                minValue = dot[1]
         fx= 0
         fy = 0
         sx = 0
         sy = 0
         for dot in dots:
             sx = WIDTH*dot[0]/100
-            sy = HEIGHT*dot[1]/maxValue
+            sy = HEIGHT*(dot[1]-minValue)/(maxValue-minValue)
             self.canvas.create_line(fx, fy, sx, sy)
             fx = sx
             fy = sy
