@@ -9,6 +9,6 @@ import random
 outfile = open('dots.txt', 'w')
 i = 1
 for i in range(100):
-    y = random.random()
+    y = random.randint(0, 10)
     outfile.write(str(i)+'\t'+str(y)+'\n')
 outfile.close()

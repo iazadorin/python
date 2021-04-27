@@ -12,20 +12,26 @@ class grafic():
         self.main_window = tkinter.Tk()
         self.canvas = tkinter.Canvas(self.main_window,
                                      width = WIDTH, height = HEIGHT)
-        fx= 0
-        fy = 0
-        sx = 0
-        sy = 0
+        
+        dots = []
         infile = open('dots.txt', 'r')
         while True:
-            sx = fx
-            sy = fy
             line = infile.readline()
             if line == '':  break
             line = line.rstrip('\n')
             line = line.split('\t')
-            sx = WIDTH*(int(line[0])/100)
-            sy = HEIGHT*float(line[1])
+            dots.append((float(line[0]),float(line[1])))
+        maxValue = dots[0][1]
+        for dot in dots:
+            if dot[1]>maxValue:
+                maxValue = dot[1]
+        fx= 0
+        fy = 0
+        sx = 0
+        sy = 0
+        for dot in dots:
+            sx = WIDTH*dot[0]/100
+            sy = HEIGHT*dot[1]/maxValue
             self.canvas.create_line(fx, fy, sx, sy)
             fx = sx
             fy = sy
