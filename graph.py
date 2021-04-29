@@ -21,21 +21,29 @@ class grafic():
             line = line.rstrip('\n')
             line = line.split('\t')
             dots.append((float(line[0]),float(line[1])))
-        maxValue = dots[0][1]
-        minValue = dots[0][1]
+        maxValueY = dots[0][1]
+        minValueY = dots[0][1]
+        maxValueX = dots[0][0]
+        minValueX = dots[0][0]
         for dot in dots:
-            if dot[1]>maxValue:
-                maxValue = dot[1]
-            if dot[1]<minValue:
-                minValue = dot[1]
+            if dot[1]>maxValueY:
+                maxValueY = dot[1]
+            if dot[1]<minValueY:
+                minValueY = dot[1]
+        for dot in dots:
+            if dot[0]>maxValueX:
+                maxValueX = dot[0]
+            if dot[0]<minValueX:
+                minValueX = dot[0]
         fx= 0
         fy = 0
         sx = 0
         sy = 0
         for dot in dots:
-            sx = WIDTH*dot[0]/100
-            sy = HEIGHT*(dot[1]-minValue)/(maxValue-minValue)
-            self.canvas.create_line(fx, fy, sx, sy)
+            sx = WIDTH*dot[0]/maxValueX-minValueX+1
+            sy = HEIGHT*(dot[1]-minValueY)/(maxValueY-minValueY)
+            self.canvas.create_line(fx, fy, sx, sy, fill = 'firebrick')
+            self.canvas.create_oval(sx-1.5, sy-1.5, sx+1.5, sy+1.5, fill = 'firebrick')
             fx = sx
             fy = sy
         infile.close()
