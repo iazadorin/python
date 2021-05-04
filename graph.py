@@ -7,6 +7,7 @@ Created on Mon Apr 26 19:25:42 2021
 import tkinter
 WIDTH = 300
 HEIGHT = 300
+STEP = 30
 class grafic():
     def __init__(self):
         self.main_window = tkinter.Tk()
@@ -39,13 +40,15 @@ class grafic():
         fy = 0
         sx = 0
         sy = 0
+        stepNum = 0
         for dot in dots:
             sx = WIDTH*dot[0]/maxValueX-minValueX+1
             sy = HEIGHT*(dot[1]-minValueY)/(maxValueY-minValueY)
             self.canvas.create_line(fx, fy, sx, sy, fill = 'firebrick')
-            self.canvas.create_oval(sx-1.5, sy-1.5, sx+1.5, sy+1.5, fill = 'firebrick')
+            if stepNum%STEP==0:    self.canvas.create_oval(sx-1.5, sy-1.5, sx+1.5, sy+1.5, fill = 'firebrick')
             fx = sx
             fy = sy
+            stepNum+=1
         infile.close()
         self.canvas.pack()
         tkinter.mainloop()
