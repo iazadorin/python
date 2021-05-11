@@ -26,34 +26,49 @@ class grafic():
             line = line.rstrip('\n')
             line = line.split('\t')
             dots.append((float(line[0]),float(line[1])))
-        maxValueY = dots[0][1]
-        minValueY = dots[0][1]
-        maxValueX = dots[0][0]
-        minValueX = dots[0][0]
+        infile.close()
+        self.maxValueY = dots[0][1]
+        self.minValueY = dots[0][1]
+        self.maxValueX = dots[0][0]
+        self.minValueX = dots[0][0]
         for dot in dots:
-            if dot[1]>maxValueY:
-                maxValueY = dot[1]
-            if dot[1]<minValueY:
-                minValueY = dot[1]
-        for dot in dots:
-            if dot[0]>maxValueX:
-                maxValueX = dot[0]
-            if dot[0]<minValueX:
-                minValueX = dot[0]
+            if dot[1]>self.maxValueY:
+                self.maxValueY = dot[1]
+            if dot[1]<self.minValueY:
+                self.minValueY = dot[1]
+            if dot[0]>self.maxValueX:
+                self.maxValueX = dot[0]
+            if dot[0]<self.minValueX:
+                self.minValueX = dot[0]
         fx = 0
         fy = 0
         sx = 0
         sy = 0
         stepNum = 0
+        self.canvas.create_line(self.coordXCreator(self.minValueX),
+                                self.coordYCreator(0),
+                                self.coordXCreator(self.maxValueX),
+                                self.coordYCreator(0))
+        
+        self.canvas.create_line(self.coordXCreator(0),
+                                self.coordYCreator(self.maxValueY),
+                                self.coordXCreator(0),
+                                self.coordYCreator(self.minValueY))
         for dot in dots:
-            sx = (WIDTH-GAPR-GAPL)*((dot[0]-minValueX)/(maxValueX-minValueX))+GAPL
-            sy = (HEIGHT-GAPB-GAPT)*((dot[1]-minValueY)/(maxValueY-minValueY))+GAPT
+            sx = self.coordXCreator(dot[0])
+            sy = self.coordYCreator(dot[1])
+                        
             if stepNum!=0:  self.canvas.create_line(fx, fy, sx, sy, fill = 'firebrick')
             if stepNum%STEP==0:    self.canvas.create_oval(sx-1.5, sy-1.5, sx+1.5, sy+1.5, fill = 'firebrick')
             fx = sx
             fy = sy
             stepNum+=1
-        infile.close()
+        
+        
         self.canvas.pack()
         tkinter.mainloop()
+    def coordXCreator(self, arg):
+        return (WIDTH-GAPR-GAPL)*((arg-self.minValueX)/(self.maxValueX-self.minValueX))+GAPL
+    def coordYCreator(self, arg):
+        return (HEIGHT-GAPB-GAPT)*((arg-self.minValueY)/(self.maxValueY-self.minValueY))+GAPT
 my_grafic = grafic()
