@@ -15,6 +15,7 @@ STEP = 30
 STICK = 20
 ARROWL = 10
 ARROWW = 3
+TICKSTEPX = 4
 class grafic():
     def __init__(self):
         self.main_window = tkinter.Tk()
@@ -69,6 +70,10 @@ class grafic():
                                 x-ARROWL,
                                 y-ARROWW)
         
+        self.canvas.create_text(self.coordXCreator(0)-10, y+10, text = '0')
+        self.canvas.create_text(self.coordXCreator(self.maxValueX)+20, y+10, text = 'X')
+        self.canvas.create_text(self.coordXCreator(0)-10, self.coordYCreator(self.maxValueY)-20, text = 'Y')
+        
         x = self.coordXCreator(0)
         y = self.coordYCreator(self.maxValueY)-STICK
         
@@ -86,16 +91,26 @@ class grafic():
                                 y,
                                 x+ARROWW,
                                 y+ARROWL)
+        
         for dot in dots:
             sx = self.coordXCreator(dot[0])
             sy = self.coordYCreator(dot[1])
             
             if stepNum!=0:  self.canvas.create_line(fx, fy, sx, sy, fill = 'firebrick')
-            if stepNum%STEP==0:    self.canvas.create_oval(sx-1.5, sy-1.5, sx+1.5, sy+1.5, fill = 'firebrick')
+            if stepNum%STEP==0:
+                self.canvas.create_oval(sx-1.5, sy-1.5, sx+1.5, sy+1.5, fill = 'firebrick')
             fx = sx
             fy = sy
             stepNum+=1
             
+            
+        x = self.minValueX
+        while x < self.maxValueX:
+            a = self.coordXCreator(x)
+            b = self.coordYCreator(0)
+            self.canvas.create_line(a, b+5, a, b-5)
+            if x>self.minValueX:   self.canvas.create_text(a, b+4, anchor=tkinter.NW, text="%.2f" % x)
+            x+=TICKSTEPX
         self.canvas.pack()
         tkinter.mainloop()
     def coordXCreator(self, arg):
