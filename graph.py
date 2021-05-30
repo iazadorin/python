@@ -15,7 +15,7 @@ STEP = 30
 STICK = 20
 ARROWL = 10
 ARROWW = 3
-TICKSTEPX = 4
+TICKNX = 5
 class grafic():
     def __init__(self):
         self.main_window = tkinter.Tk()
@@ -105,12 +105,13 @@ class grafic():
             
             
         x = self.minValueX
+        hg = (self.maxValueX-self.minValueX)/TICKNX
         while x < self.maxValueX:
             a = self.coordXCreator(x)
             b = self.coordYCreator(0)
             self.canvas.create_line(a, b+5, a, b-5)
             if x>self.minValueX:   self.canvas.create_text(a, b+4, anchor=tkinter.NW, text="%.2f" % x)
-            x+=TICKSTEPX
+            x+=hg
         self.canvas.pack()
         tkinter.mainloop()
     def coordXCreator(self, arg):
