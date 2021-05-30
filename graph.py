@@ -5,17 +5,18 @@ Created on Mon Apr 26 19:25:42 2021
 @author: vedi
 """
 import tkinter
-WIDTH = 300
-HEIGHT = 300
-GAPL = 20
-GAPR = 30
+WIDTH = 500
+HEIGHT = 500
+GAPL = 40
+GAPR = 50
 GAPT = 20
-GAPB = 30
+GAPB = 50
 STEP = 30
-STICK = 20
+STICK = 40
 ARROWL = 10
 ARROWW = 3
 TICKNX = 5
+TICKNY = 5
 class grafic():
     def __init__(self):
         self.main_window = tkinter.Tk()
@@ -69,10 +70,11 @@ class grafic():
                                 y,
                                 x-ARROWL,
                                 y-ARROWW)
-        
+        '''
         self.canvas.create_text(self.coordXCreator(0)-10, y+10, text = '0')
-        self.canvas.create_text(self.coordXCreator(self.maxValueX)+20, y+10, text = 'X')
-        self.canvas.create_text(self.coordXCreator(0)-10, self.coordYCreator(self.maxValueY)-20, text = 'Y')
+        '''
+        self.canvas.create_text(self.coordXCreator(self.maxValueX)+STICK, y+10, text = 'X')
+        self.canvas.create_text(self.coordXCreator(0)-10, self.coordYCreator(self.maxValueY)-STICK, text = 'Y')
         
         x = self.coordXCreator(0)
         y = self.coordYCreator(self.maxValueY)-STICK
@@ -105,13 +107,22 @@ class grafic():
             
             
         x = self.minValueX
+        y = self.minValueY
         hg = (self.maxValueX-self.minValueX)/TICKNX
-        while x < self.maxValueX:
+        gh = (self.maxValueY-self.minValueY)/TICKNY
+        while x <= self.maxValueX+hg/2:
             a = self.coordXCreator(x)
             b = self.coordYCreator(0)
             self.canvas.create_line(a, b+5, a, b-5)
-            if x>self.minValueX:   self.canvas.create_text(a, b+4, anchor=tkinter.NW, text="%.2f" % x)
+            '''if x>self.minValueX:   '''
+            self.canvas.create_text(a+3, b+4, anchor=tkinter.NW, text="%.2f" % x)
             x+=hg
+        while y <= self.maxValueY+gh/2:
+            a = self.coordXCreator(0)
+            b = self.coordYCreator(y)
+            self.canvas.create_line(a+5, b, a-5, b)
+            self.canvas.create_text(a-4, b, anchor=tkinter.SE, text="%.2f" % y)
+            y+=gh
         self.canvas.pack()
         tkinter.mainloop()
     def coordXCreator(self, arg):
