@@ -10,6 +10,7 @@ outfile = open('dots.txt', 'w')
 i = 0
 while i<25.12:
     y = math.sin(i)
-    outfile.write(str(i)+'\t'+str(y)+'\n')
+    y2 = math.sin(i*2)
+    outfile.write(str(i)+'\t'+str(y)+'\t'+str(y2)+'\n')
     i+=0.01
 outfile.close()
