@@ -1,16 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Apr 25 16:19:10 2021
+Created on Sun Sep  5 19:39:40 2021
 
 @author: vedi
 """
 
-import math
 outfile = open('dots.txt', 'w')
-i = 0
-while i<25.12:
-    y = math.sin(i)
-    y2 = math.cos(i+1.57+3.14)
+i = -4
+while i<=4:
+    y = abs(2*i)
+    y2 = i*i
     outfile.write(str(i)+'\t'+str(y)+'\t'+str(y2)+'\n')
-    i+=0.01
+    i+=0.1
 outfile.close()
